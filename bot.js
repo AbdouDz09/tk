@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const prefix = "=";
+const prefix = "*";
 
 
 
@@ -18,7 +18,7 @@ function clean(text) {
 //console & playing !
 client.on('ready', () => {
     console.log(`${client.user.tag} Is Online !`) 
-    client.user.setGame(`${prefix}help`)
+    client.user.setGame(`${prefix}new`)
 });
 
 
@@ -49,7 +49,7 @@ client.on("message", (message) => {
       const reason = message.content.split(" ").slice(1).join(" ");
       if (!message.guild.roles.exists("name", "Support Team")) return message.channel.send(`هذا السيرفر ليس لديه \`Support Team\` صنع رتبة, لذلك لن يتم فتح التذكرة.\nاذا كنت تمتلك administrator, إنشاء اسم بهذا الاسم بالضبط وإعطائه للمستخدمين الذين يمكنهم مشاهدة التذاكر.`);
       if (message.guild.channels.exists("name", "ticket-" + message.author.id)) return message.channel.send(`انت بالفعل لديك تذكره مفتوحه.`);
-      message.guild.createChannel(`ticket-${message.author.id}`, "text").then(c => {
+      message.guild.createChannel(`ticket-${message.author.username}`, "text").then(c => {
           let role = message.guild.roles.find("name", "Support Team");
           let role2 = message.guild.roles.find("name", "@everyone");
           c.overwritePermissions(role, {
@@ -72,7 +72,7 @@ client.on("message", (message) => {
           message.channel.sendEmbed(mrx);
           const embed = new Discord.RichEmbed()
           .setColor(0xCF40FA)
-          .addField(`مرحباً ${message.author.username}!`, `من فضلك وضح لماذا قمت بفتح التذكره مع بعض التفاصيل. مسؤلي السرفر سوف يكونوا موجودين في اسرع وقت للمساعده.`)
+          .addField(`مرحباً ${message.author.username}!`, `هلا نورت سيرفر في تيكت صغير فقط بس راح تصير حكاية كبيرة.`)
           .setTimestamp();
           c.send({ embed: embed });
       }).catch(console.error);
@@ -80,9 +80,9 @@ client.on("message", (message) => {
   if (message.content.toLowerCase().startsWith(prefix + `close`)) {
       if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`لا يمكنك استخدام أمر الإغلاق خارج قناة التذاكر.`);
   
-      message.channel.send(`هل أنت متاكد؟ بمجرد تأكيد, لا يمكنك عكس هذا العمل!!\nللتأكيد ، اكتب \`-confirm\`. سوف ينتهي المهلة خلال 10 ثوانٍ ويتم إلغاؤها.`)
+      message.channel.send(`هل أنت متاكد؟ بمجرد تأكيد, لا يمكنك عكس هذا العمل!!\nللتأكيد ، اكتب \`-*con\`. سوف ينتهي المهلة خلال 10 ثوانٍ ويتم إلغاؤها.`)
       .then((m) => {
-        message.channel.awaitMessages(response => response.content === '-confirm', {
+        message.channel.awaitMessages(response => response.content === '*cn', {
           max: 1,
           time: 10000,
           errors: ['time'],

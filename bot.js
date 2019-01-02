@@ -80,11 +80,11 @@ client.on("message", (message) => {
   if (message.content.toLowerCase().startsWith(prefix + `close`)) {
       if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`لا يمكنك استخدام أمر الإغلاق خارج قناة التذاكر.`);
   
-      message.channel.send(`هل أنت متاكد؟ بمجرد تأكيد, لا يمكنك عكس هذا العمل!!\nللتأكيد ، اكتب \`-*con\`. سوف ينتهي المهلة خلال 10 ثوانٍ ويتم إلغاؤها.`)
+      message.channel.send(`هل أنت متاكد؟ بمجرد تأكيد, لا يمكنك عكس هذا العمل!!\nللتأكيد ، اكتب \`-*con\`. سوف ينتهي المهلة خلال 30 ثوانٍ ويتم إلغاؤها.`)
       .then((m) => {
-        message.channel.awaitMessages(response => response.content === '*cn', {
+        message.channel.awaitMessages(response => response.content === '*con', {
           max: 1,
-          time: 10000,
+          time: 30000,
           errors: ['time'],
         })
         .then((collected) => {
